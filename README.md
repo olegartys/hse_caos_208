@@ -1,3 +1,5 @@
+Настройка `gdb` для отображения регистров: `cp gdbinit ~/.gdbinit`
+
 # Полезные ссылки
 * [Wiki](http://wiki.cs.hse.ru/CAOS-2021)
 * [Материалы прошлогоднего курса](https://github.com/blackav/hse-caos-2020)
