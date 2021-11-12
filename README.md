@@ -8,6 +8,7 @@
 ---
 * [x86 instruction set reference](https://c9x.me/x86/): описание основных инструкций x86
 * [GNU as](https://sourceware.org/binutils/docs/as/): тут можно почитать, например, про директивы GAS
+* [cdecl](https://aaronbloomfield.github.io/pdr/book/x86-32bit-ccc-chapter.pdf): описание cdecl calling convention
 
 ---
 * [godbolt](https://godbolt.org/)
