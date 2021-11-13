@@ -90,7 +90,9 @@ obj_arr_append:
 obj_arr_call:
 	movl 4(%esp), %ecx // i
 
-	// Получаем значение поля method структуры с индексом ecx в регистр edx
+	// Получаем значение поля method структуры с индексом ecx в регистр edx.
+	// Поле находится по offset-у 4байт.
+	// Аналогично можно переписать так: mov obj_arr+4(, %ecx, OBJ_SIZE), %edx
 	mov $4, %eax
 	mov obj_arr(%eax, %ecx, OBJ_SIZE), %edx
 	test %edx, %edx
