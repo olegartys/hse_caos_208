@@ -15,7 +15,7 @@ int obj_arr_size;
 
 // cdecl
 extern void obj_arr_append(int x, int i);
-extern void obj_arr_call(int i);
+extern int obj_arr_call(int i);
 
 int main(void) {
 	assert(sizeof(struct obj) == 8);
@@ -29,7 +29,8 @@ int main(void) {
 			obj_arr_append(x, i);
 		} else if (c == '1') {
 			scanf("%d", &i);
-			obj_arr_call(i);
+			int ret = obj_arr_call(i);
+			printf("%d\n", ret);
 		} else if (c == '\n') {
 			// no-op
 		} else {

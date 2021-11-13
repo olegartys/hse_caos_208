@@ -115,13 +115,9 @@ obj_arr_call:
 	// method поменял eax -- сохраняем его в структуру-элемент массива.
 	mov %eax, obj_arr(, %ecx, OBJ_SIZE)
 
-	// ... и выводим его на экран
-	// TODO(olegartys): перенести вывод в C код и избавиться
-	// от simpleio
-	call writei32
+	// Возвращаемое значение должно сохраняться в eax, согласно cdecl.
 	ret
 
 .obj_arr_call.null_method:
 	mov $-1, %eax
-	call writei32
 	ret
