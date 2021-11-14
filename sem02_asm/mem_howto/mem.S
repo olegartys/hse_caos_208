@@ -51,6 +51,7 @@ main:
 	mov my_initialized_array_size, %ecx
 	shr $2, %ecx
 	dec %ecx
+	js .exit_array_empty
 
 .print_array_loop:
 	// Прочитать значение из памяти по адресу ebx + ecx*4 в регистр eax
@@ -67,4 +68,5 @@ main:
 	test %ecx, %ecx
 	jns .print_array_loop
 
+.exit_array_empty:
 	call finish
