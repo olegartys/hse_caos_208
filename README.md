@@ -1,4 +1,9 @@
-Настройка `gdb` для отображения регистров: `cp gdbinit ~/.gdbinit`
+# Семинары
+[Семинар 1 (5.11.21)](./sem01_asm): x86 ASM, целочисленная и побитовая арифметика, условные и безусловные переходы
+
+[Семинар 2 (8.11.21)](./sem02_asm): x86 ASM, работа с памятью, indirect call, вызов ASM процедур из C кода
+
+[Семинар 3 (15.11.21)](./sem03_asm): x86 ASM, ASCII строки, вызов libc из ASM
 
 # Полезные ссылки
 * [Wiki](http://wiki.cs.hse.ru/CAOS-2021)
@@ -13,3 +18,6 @@
 ---
 * [godbolt](https://godbolt.org/)
 * [Bit Twiddling Hacks](https://graphics.stanford.edu/~seander/bithacks.html): решение различных задач с помощью битовых операций
+
+# Tips & tricks
+Настройка `gdb` для отображения регистров: `cp gdbinit ~/.gdbinit`
