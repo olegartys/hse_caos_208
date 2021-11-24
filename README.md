@@ -5,6 +5,8 @@
 
 [Семинар 3 (15.11.21)](./sem03_asm): x86 ASM, ASCII строки, вызов libc из ASM
 
+[Семинар 4 (22.11.21)](./sem04_asm): x86 ASM, системные вызовы
+
 # Полезные ссылки
 * [Wiki](http://wiki.cs.hse.ru/CAOS-2021)
 * [Материалы прошлогоднего курса](https://github.com/blackav/hse-caos-2020)
