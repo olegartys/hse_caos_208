@@ -7,6 +7,8 @@
 
 [Семинар 4 (22.11.21)](./sem04_asm): x86 ASM, системные вызовы
 
+[Семинар 5 (29.11.21)](./sem05_syscalls_io): C; argc/argv; ввод/вывод с помощью read/write; lseek
+
 # Полезные ссылки
 * [Wiki](http://wiki.cs.hse.ru/CAOS-2021)
 * [Материалы прошлогоднего курса](https://github.com/blackav/hse-caos-2020)
