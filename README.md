@@ -20,18 +20,23 @@
 * работа с файловой системой procfs: чтение собственной памяти через /proc/self/mem
 
 # Полезные ссылки
+## Общее
+* [godbolt](https://godbolt.org/)
+* [Bit Twiddling Hacks](https://graphics.stanford.edu/~seander/bithacks.html): решение различных задач с помощью битовых операций
+
+## C
+* [Стандарт C11](http://www.open-std.org/jtc1/sc22/wg14/www/docs/n1548.pdf)
+* [Ужасы макросов: double evaluation](https://stackoverflow.com/questions/39439181/what-is-double-evaluation-and-why-should-it-be-avoided)
+
+## Про курс
 * [Wiki](http://wiki.cs.hse.ru/CAOS-2021)
 * [Материалы прошлогоднего курса](https://github.com/blackav/hse-caos-2020)
 	* [Базовые команды ассемблера](https://github.com/blackav/hse-caos-2020/tree/master/07-asm1)
 
----
+## x86 ASM
 * [x86 instruction set reference](https://c9x.me/x86/): описание основных инструкций x86
 * [GNU as](https://sourceware.org/binutils/docs/as/): тут можно почитать, например, про директивы GAS
 * [cdecl](https://aaronbloomfield.github.io/pdr/book/x86-32bit-ccc-chapter.pdf): описание cdecl calling convention
-
----
-* [godbolt](https://godbolt.org/)
-* [Bit Twiddling Hacks](https://graphics.stanford.edu/~seander/bithacks.html): решение различных задач с помощью битовых операций
 
 # Tips & tricks
 Настройка `gdb` для отображения регистров: `cp gdbinit ~/.gdbinit`
