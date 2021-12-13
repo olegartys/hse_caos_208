@@ -19,6 +19,13 @@
 * компиляция с -Wall, -Werror, -pedantic и исправление последствий
 * работа с файловой системой procfs: чтение собственной памяти через /proc/self/mem
 
+[Семинар 7 (13.12.21)](./sem07_dynamic_memory):
+* подсчет метрик PSS, RSS через парсинг /proc/<pid>/smaps
+* stdio для работы с файлами: FILE\*, fopen, getline
+* примеры использования strstr и strtol
+* парсинг строк с помощью sscanf
+* пример использования realloc
+
 # Полезные ссылки
 ## Общее
 * [godbolt](https://godbolt.org/)
