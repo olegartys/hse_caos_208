@@ -27,6 +27,10 @@
 * пример использования realloc
 * пример вызова qsort
 
+[Семинар 8 (17.01.22)](./sem08_floating_point):
+* подсчет суммы float и double чисел. Kahan's алгоритм
+* подсчет загрузки CPU
+
 # Полезные ссылки
 ## Общее
 * [godbolt](https://godbolt.org/)
@@ -35,6 +39,7 @@
 ## C
 * [Стандарт C11](http://www.open-std.org/jtc1/sc22/wg14/www/docs/n1548.pdf)
 * [Ужасы макросов: double evaluation](https://stackoverflow.com/questions/39439181/what-is-double-evaluation-and-why-should-it-be-avoided)
+* [Куча теории про floating point](https://docs.oracle.com/cd/E19957-01/806-3568/ncg_goldberg.html)
 
 ## Про курс
 * [Wiki](http://wiki.cs.hse.ru/CAOS-2021)
