@@ -64,13 +64,51 @@ static void naive_brightness(unsigned char *line, int len, int brightness) {
 
 static void sse_brightness(unsigned char *line, int len, int brightness) {
 	// inline ASM
+	// SIMD x86
+	// 16 byte: [p0, p1, p2 .. p15]
+	 //			+
+	// 			[b, b, b, b..]
+
 	asm (
-		"	mov $123, %%eax \n\t"
-		"   add $5, "
-		"	add .."
-		: "D"(line), "c"(len), "a"(brightness)
+		"	xor %%ebx, %%ebx \n\t"
+		"	test %%eax, %%eax \n\t"
+		"	jns .brightness_non_neg \n\t"
+		"	neg %%al \n\t"
+		"	mov $1, %%ebx \n\t"
+		""
+		// 1. хотим заполнить регистр xmm1 яркостью
+		".brightness_non_neg:"
+		"	mov %%al, %%ah \n\t"
+		"	pinsrw $0, %%eax, %%xmm1 \n\t" // [b, b]
+		"	pinsrw $1, %%eax, %%xmm1 \n\t" // [b, b, b, b]
+		"	pshufd $0, %%xmm1, %%xmm1 \n\t" // [b .. 16times]
+		"	test %%ebx, %%ebx \n\t"
+		"	jnz .brightness_neg_loop \n\t"
+		""
+		".brightness_loop: \n\t"
+		// 2. хотим заполнить регистр xmm0 пикселями
+		"	movups (%%edi), %%xmm0 \n\t" // [p0, p1 .. p15]
+		// 3. сложить вектора
+		"	paddusb %%xmm1, %%xmm0 \n\t"
+		"	movups %%xmm0, (%%edi) \n\t" // записали результат обратно в память
+		"	add $16, %%edi \n\t"
+		"	sub $16, %%ecx \n\t"
+		"	jnz .brightness_loop \n\t"
+		"	jmp .brightness_end \n\t"
+		""
+		".brightness_neg_loop:\n\t"
+		"	movups (%%edi), %%xmm0 \n\t" // [p0, p1 .. p15]
+		"	psubusb %%xmm1, %%xmm0 \n\t"
+		"	movups %%xmm0, (%%edi) \n\t" // записали результат обратно в память
+		"	add $16, %%edi \n\t"
+		"	sub $16, %%ecx \n\t"
+		"	jnz .brightness_neg_loop \n\t"
+		"	jmp .brightness_end \n\t"
+		""
+		".brightness_end: \n\t"
 		: // output
-		: "%eax"
+		: "D"(line), "c"(len), "a"(brightness) // input
+		: "%xmm0", "%xmm1", "%ebx" // clobber
 		);
 }
 
@@ -94,6 +132,7 @@ int main(void) {
 	// gray pixel = [0..255]
 	for (int i = 0; i < IMAGE_HEIGHT; i++) {
 		naive_brightness(buf + i * IMAGE_WIDTH, IMAGE_WIDTH, 30);
+		// sse_brightness(buf + i * IMAGE_WIDTH, IMAGE_WIDTH, 30);
 	}
 
 	FILE *f_processed = fopen(IMAGE_PROCESSED_PATH, "w");
