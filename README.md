@@ -52,6 +52,8 @@
 ## Общее
 * [godbolt](https://godbolt.org/)
 * [Bit Twiddling Hacks](https://graphics.stanford.edu/~seander/bithacks.html): решение различных задач с помощью битовых операций
+* [Статья про то, что линковаться статически плохо](https://www.akkadia.org/drepper/no_static_linking.html)
+* [Статья про то, что автор прошлой статьи не прав](https://gavinhoward.com/2021/10/static-linking-considered-harmful-considered-harmful/)
 
 ## C
 * [Стандарт C11](http://www.open-std.org/jtc1/sc22/wg14/www/docs/n1548.pdf)
