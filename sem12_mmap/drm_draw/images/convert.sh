@@ -1,1 +1,1 @@
-convert -extent 1792x1120 -gravity Center ~/Downloads/lena.png bgra:lena.raw
+convert -extent 1792x1120 -gravity Center lena.png bgra:lena.raw
