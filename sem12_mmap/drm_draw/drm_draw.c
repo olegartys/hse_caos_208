@@ -8,6 +8,7 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
+// Специфичные для моей ОС параметры DRM
 #define CARD "/dev/dri/card0"
 
 #define FB_WIDTH 1792
@@ -33,7 +34,7 @@ int main(int argc, char *argv[]) {
 
     printf("Pid: %d\n", getpid());
 
-    // 1. Init DRM framebuffer
+    // 1. Инициализируем подсистему DRM и получаем дескриптор фреймбуфера
     card_fd = open(CARD, O_RDWR);
     if (card_fd < 0) {
         perror("open card");
@@ -46,7 +47,7 @@ int main(int argc, char *argv[]) {
         goto exit;
     }
 
-    // 2. Mmap it into our process address space
+    // 2. Создаем маппинг фреймбуфера в адресном пространстве нашего процесса
     fb_map_size = fb->size;
     off_t offset = fb->offset;
     printf("size=%zu, offset=%zd fd=%d\n", fb_map_size, offset, card_fd);
@@ -57,7 +58,7 @@ int main(int argc, char *argv[]) {
         goto exit;
     }
 
-    // 3. Fill the buffer
+    // 3. Открываем файл с картинкой
     const char *file_path = argv[1];
     file_fd = open(file_path, O_RDONLY);
     if (file_fd < 0) {
@@ -71,15 +72,20 @@ int main(int argc, char *argv[]) {
         goto exit;
     }
 
+    // Создаем маппинг файла в адресном пространстве нашего процесса
     file_map = mmap(NULL, st.st_size, PROT_READ, MAP_PRIVATE, file_fd, 0);
     if (file_map == MAP_FAILED) {
         perror("mmap");
         goto exit;
     }
 
+    // Теперь у нас есть 2 указателя: на память фреймбуфера, куда мы хотим вывести картинку,
+    // и на содержимое файла
+    //
+    // Просто вызываем копирование из одного адреса в другой
     memcpy(fb_map, file_map, min(fb_map_size, st.st_size));
 
-    // 4. Show it
+    // 4. Показываем картинку
     if (drm_draw(fb) < 0) {
         fprintf(stderr, "Error drawing\n");
         goto exit;
