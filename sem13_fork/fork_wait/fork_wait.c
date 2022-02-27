@@ -24,7 +24,7 @@ int main(void) {
 			}
 
 			if (!WIFEXITED(status)) {
-				printf("Child exited with non-zero status\n");
+				printf("Child finished abnormally\n");
 				return 1;
 			}
 
