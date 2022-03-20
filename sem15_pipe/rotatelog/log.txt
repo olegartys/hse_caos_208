@@ -1,0 +1,5 @@
+total 12
+-rw-rw-r-- 1 xubuntu xubuntu    0 мар 14 10:30 log.txt
+-rw-rw-r-- 1 xubuntu xubuntu  147 мар  6 10:59 Makefile
+drwxrwxr-x 2 xubuntu xubuntu 4096 мар 14 10:30 out
+-rw-rw-r-- 1 xubuntu xubuntu 3004 мар 14 10:30 rotatelog.c
