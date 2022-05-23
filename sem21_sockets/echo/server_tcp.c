@@ -10,15 +10,22 @@
 
 #include <stdio.h>
 #include <errno.h>
+#include <string.h>
 
 #include <fcntl.h>
 #include <sys/socket.h>
-#include <sys/un.h> 
+#include <netinet/in.h>
+#include <netinet/ip.h>
 #include <unistd.h>
 
 enum {
 	MAX_ACCEPTED  = 10,
 	BUF_SIZE = 1024,
+};
+
+enum {
+	PORT = 1234,
+	ADDR = INADDR_ANY /* 0.0.0.0 */,
 };
 
 static int communicate(int fd) {
@@ -60,8 +67,7 @@ int main(void) {
 	// socket -> bind -> listen -> accept
 
 	// OSI (IP -- 3, TCP -- 4): TCP/IP
-	// address:port (myhost.ru:80 8080)
-	int sfd = socket(AF_UNIX, SOCK_STREAM, 0);
+	int sfd = socket(AF_INET, SOCK_STREAM /* TCP */, 0);
 	if (sfd < 0) {
 		perror("socket");
 		return 1;
@@ -72,15 +78,17 @@ int main(void) {
 		goto exit_sfd;
 	}
 
-	struct sockaddr_un addr;
-	addr.sun_family = AF_UNIX;
-	snprintf(addr.sun_path, sizeof(addr.sun_path), "/tmp/socket_path");
+	// address:port (myhost.ru:80 8080)
+	struct sockaddr_in addr;
+	memset(&addr, 0, sizeof(addr));
 
-	if (unlink(addr.sun_path) == -1 && errno != ENOENT) {
-		ret = errno;
-		perror("unlink");
-		goto exit_sfd;
-	}
+	addr.sin_family = AF_INET;
+	addr.sin_port = htons(PORT); /* big-endian / little-endian (endianness) */
+	addr.sin_addr.s_addr = htonl(ADDR);
+
+	int val = 1;
+	(void)setsockopt(sfd, SOL_SOCKET, SO_REUSEADDR, &val, sizeof(val));
+	(void)setsockopt(sfd, SOL_SOCKET, SO_REUSEPORT, &val, sizeof(val));
 
 	if (bind(sfd, (struct sockaddr *)&addr, sizeof(addr)) == -1) {
 		ret = errno;
@@ -121,7 +129,7 @@ int main(void) {
 
 		if (fd_arr->data[0].revents & POLLIN) {
 			// хочет подключиться новый клиент
-			struct sockaddr_un caddr;
+			struct sockaddr_in caddr;
 			socklen_t caddrlen = sizeof(caddr);
 			int cfd = accept(sfd, (struct sockaddr *)&caddr, &caddrlen);
 			if (cfd == -1) {
