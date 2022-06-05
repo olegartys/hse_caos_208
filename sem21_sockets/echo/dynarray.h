@@ -1,3 +1,5 @@
+#pragma once
+
 #include <poll.h>
 #include <stddef.h>
 
